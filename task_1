@@ -1,0 +1,15 @@
+#!/usr/bin/perl 
+use strict;
+
+sub uniq {
+    my %seen;
+    grep !$seen{$_}++, @_;
+}
+
+sub findNumbers {
+	my @arr = sort { $a <=> $b } uniq(@_);
+	return @arr;
+}
+
+my @arrs = (4, 4, 6, 8, 1);
+print findNumbers(@arrs);
