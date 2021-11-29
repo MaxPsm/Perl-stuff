@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+use strict;
+use warnings; 
+
+sub uniq {
+    my %seen;
+    grep !$seen{$_}++, @_;
+}
+
+sub add {
+	my ($one_ref, $two_ref) = @_;
+	my @one = @{ $one_ref };
+	my @two = @{ $two_ref };
+
+	my @uniq_one = uniq(@one);
+	my @uniq_two = uniq(@two);
+
+	my %a1 = map { $_ => 1 } @uniq_one;
+	my %a2 = map { $_ => 1 } @uniq_two;
+	
+	my @missing_from_a1 = grep !$a1{$_}, @uniq_two;
+	my @missing_from_a2 = grep !$a2{$_}, @uniq_one;
+
+	return (@missing_from_a1, @missing_from_a2);
+}
+
+my @first = (2, 3, 3, 7, 8, 5);
+my @second = (3, 7, 8, 5);
+
+print "@first\n";
+print "@second\n";
+
+my @res_mas = add(\@first, \@second);
+
+if (@res_mas) {
+    print "@res_mas\n";
+}
+else {
+    print "array empty\n";
+}
+
+
